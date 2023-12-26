@@ -1,0 +1,73 @@
+:root {
+  --stack-margin: 2rem;
+  --bg-color: #607d8b;
+  --font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  --primary-text-color: white;
+  --cell-bg-color: #37474f;
+  --cell-X-color: #3498db;
+  --cell-O-color: #e74c3c;
+  --winner-cell-bg-color: white;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.stack > * + * {
+  margin-top: var(--stack-margin);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+}
+
+.game-container {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-rows: repeat(3, 5rem);
+  grid-template-columns: repeat(3, 5rem);
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.grid-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-text-color);
+  background-color: var(--cell-bg-color);
+  font-size: 1.5rem;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+}
+
+.grid-cell.X {
+  color: var(--cell-X-color);
+}
+
+.grid-cell.O {
+  color: var(--cell-O-color);
+}
+
+.grid-cell.winner {
+  background-color: var(--winner-cell-bg-color);
+  font-weight: bold;
+}
+
+.restart-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 4px;
+  background-color: #86abbd;
+}
