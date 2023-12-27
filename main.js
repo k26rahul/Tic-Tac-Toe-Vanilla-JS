@@ -3,11 +3,25 @@ window.state = state;
 
 const playerXSymbol = 'X';
 const playerOSymbol = 'O';
+let XScore = 0;
+let OScore = 0;
+let drawScore = 0;
 
 const statusElement = document.querySelector('.game-status');
 const cellElements = document.querySelectorAll('.grid-cell');
+const restartBtnElement = document.querySelector('.restart-btn');
 
-document.querySelector('.restart-btn').addEventListener('click', () => {
+const XScoreElement = document.querySelector(
+  '.game-score-display.X .score-value'
+);
+const OScoreElement = document.querySelector(
+  '.game-score-display.O .score-value'
+);
+const drawScoreElement = document.querySelector(
+  '.game-score-display.draw .score-value'
+);
+
+restartBtnElement.addEventListener('click', () => {
   if (state.isGameOver) restart();
   else if (window.confirm('Are you sure you want to restart the game?'))
     restart();
@@ -32,10 +46,8 @@ function handleCellClick(index) {
   updateCell(index);
   makeMove(index);
   updateStatus();
-
-  if (state.winner) {
-    highlightWinnerCells();
-  }
+  updateScore();
+  highlightWinnerCells();
 }
 
 function updateCell(index) {
@@ -44,7 +56,21 @@ function updateCell(index) {
   cellElement.classList.add(state.currentPlayer);
 }
 
+function updateScore() {
+  if (!state.isGameOver) return;
+
+  if (state.winner === 'X') XScore++;
+  else if (state.winner === 'O') OScore++;
+  else drawScore++;
+
+  XScoreElement.textContent = XScore;
+  OScoreElement.textContent = OScore;
+  drawScoreElement.textContent = drawScore;
+}
+
 function highlightWinnerCells() {
+  if (!state.winner) return;
+
   state.winningLine.forEach(index => {
     cellElements[index].classList.add('winner');
   });
@@ -59,7 +85,7 @@ function updateStatus() {
     setStatusText("Game over. It's a draw!");
     return;
   }
-  setStatusText(`Current move: Player ${getPlayerSymbol(state.currentPlayer)}`);
+  setStatusText(`${getPlayerSymbol(state.currentPlayer)} Turn`);
 }
 
 function isMovePossible(index) {

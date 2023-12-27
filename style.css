@@ -1,9 +1,7 @@
 :root {
-  --stack-margin: 2rem;
+  --stack-margin: 1.5em;
   --bg-color: #607d8b;
   --font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-  --primary-text-color: white;
   --cell-bg-color: #37474f;
   --cell-X-color: #3498db;
   --cell-O-color: #e74c3c;
@@ -16,8 +14,18 @@
   box-sizing: border-box;
 }
 
-.stack > * + * {
+button {
+  user-select: none;
+  border: none;
+  cursor: pointer;
+}
+
+.vertical-stack > * + * {
   margin-top: var(--stack-margin);
+}
+
+.horizontal-stack > * + * {
+  margin-left: var(--stack-margin);
 }
 
 body {
@@ -26,10 +34,14 @@ body {
 }
 
 .game-container {
-  padding-top: 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.game-status {
+  font-size: 1.5rem;
 }
 
 .game-grid {
@@ -44,12 +56,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--primary-text-color);
   background-color: var(--cell-bg-color);
   font-size: 1.5rem;
-  user-select: none;
-  border: none;
-  cursor: pointer;
 }
 
 .grid-cell.X {
@@ -66,8 +74,28 @@ body {
 }
 
 .restart-btn {
-  padding: 0.5rem 1rem;
-  font-size: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
+  border: 2px solid black;
   border-radius: 4px;
-  background-color: #86abbd;
+  background-color: var(--bg-color);
+}
+
+.game-score {
+  display: flex;
+  --stack-margin: 2rem;
+}
+
+.game-score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-score-display .score-label {
+  width: 5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 2px solid black;
 }

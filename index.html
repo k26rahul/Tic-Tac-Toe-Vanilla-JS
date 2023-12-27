@@ -11,10 +11,25 @@
     <script type="module" src="main.js" defer></script>
   </head>
   <body>
-    <main class="game-container stack">
+    <main class="game-container vertical-stack">
       <h1 class="game-title">🏆 Tic-Tac-Toe 🏆</h1>
-      <h2 class="game-status">Current move: Player X</h2>
 
+      <section class="game-score horizontal-stack">
+        <div class="game-score-display X">
+          <span class="score-label">Win X</span>
+          <span class="score-value">0</span>
+        </div>
+        <div class="game-score-display draw">
+          <span class="score-label">Draw</span>
+          <span class="score-value">0</span>
+        </div>
+        <div class="game-score-display O">
+          <span class="score-label">Win O</span>
+          <span class="score-value">0</span>
+        </div>
+      </section>
+
+      <p class="game-status">Current move: Player X</p>
       <section class="game-grid">
         <button class="grid-cell"></button>
         <button class="grid-cell"></button>
