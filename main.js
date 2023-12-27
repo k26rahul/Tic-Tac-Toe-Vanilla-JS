@@ -1,4 +1,5 @@
 import { state, makeMove, resetState } from './ticTacToeGame.js';
+window.state = state;
 
 const playerXSymbol = 'X';
 const playerOSymbol = 'O';
