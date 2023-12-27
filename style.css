@@ -28,6 +28,10 @@ button {
   margin-left: var(--stack-margin);
 }
 
+.XO {
+  font-family: 'Monoton', sans-serif;
+}
+
 body {
   background-color: var(--bg-color);
   font-family: var(--font-family);
@@ -42,6 +46,10 @@ body {
 
 .game-status {
   font-size: 1.5rem;
+}
+
+.game-status > p {
+  display: none;
 }
 
 .game-grid {
@@ -86,13 +94,13 @@ body {
   --stack-margin: 2rem;
 }
 
-.game-score-display {
+.score-display {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.game-score-display .score-label {
+.score-display .score-label {
   width: 5rem;
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;

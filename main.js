@@ -1,3 +1,4 @@
+import DisplayController from './DisplayController.js';
 import { state, makeMove, resetState } from './ticTacToeGame.js';
 window.state = state;
 
@@ -7,18 +8,14 @@ let XScore = 0;
 let OScore = 0;
 let drawScore = 0;
 
-const statusElement = document.querySelector('.game-status');
 const cellElements = document.querySelectorAll('.grid-cell');
-const restartBtnElement = document.querySelector('.restart-btn');
+const cellElementClassName = cellElements[0].className;
 
-const XScoreElement = document.querySelector(
-  '.game-score-display.X .score-value'
-);
-const OScoreElement = document.querySelector(
-  '.game-score-display.O .score-value'
-);
+const restartBtnElement = document.querySelector('.restart-btn');
+const XScoreElement = document.querySelector('.score-display.X .score-value');
+const OScoreElement = document.querySelector('.score-display.O .score-value');
 const drawScoreElement = document.querySelector(
-  '.game-score-display.draw .score-value'
+  '.score-display.draw .score-value'
 );
 
 restartBtnElement.addEventListener('click', () => {
@@ -31,7 +28,7 @@ restart();
 function restart() {
   cellElements.forEach((cellElement, index) => {
     cellElement.textContent = '';
-    cellElement.className = 'grid-cell';
+    cellElement.className = cellElementClassName;
     cellElement.addEventListener('click', () => handleCellClick(index), {
       once: true,
     });
@@ -76,16 +73,51 @@ function highlightWinnerCells() {
   });
 }
 
+const gameStatusDisplayController = new DisplayController(
+  document.querySelector('.game-status')
+);
+
+gameStatusDisplayController.displayExclusive(['winner', ['X']]);
+
+const winnerStatusElement = document.querySelector('.game-status .winner');
+const drawStatusElement = document.querySelector('.game-status .draw');
+const turnStatusElement = document.querySelector('.game-status .turn .X');
+const gameStatusDisplayManager = new DisplayController([
+  winnerStatusElement,
+  drawStatusElement,
+  turnStatusElement,
+]);
+
+const winnerStatusXElement = winnerStatusElement.querySelector('.X');
+const winnerStatusOElement = winnerStatusElement.querySelector('.O');
+const winnerStatusDisplayManager = new DisplayController([
+  winnerStatusXElement,
+  winnerStatusOElement,
+]);
+
+const turnStatusXElement = turnStatusXElement.querySelector('.X');
+const turnStatusOElement = turnStatusXElement.querySelector('.O');
+const turnStatusDisplayManager = new DisplayController([
+  turnStatusXElement,
+  turnStatusOElement,
+]);
+
 function updateStatus() {
   if (state.winner) {
-    setStatusText(`Player ${getPlayerSymbol(state.winner)} wins!`);
+    gameStatusDisplayManager.displayExclusive(winnerStatusElement);
+    winnerStatusDisplayManager.displayExclusive(
+      state.currentPlayer === 'X' ? turnStatusXElement : turnStatusOElement
+    );
     return;
   }
   if (state.isGameOver) {
-    setStatusText("Game over. It's a draw!");
+    gameStatusDisplayManager.displayExclusive(drawStatusElement);
     return;
   }
-  setStatusText(`${getPlayerSymbol(state.currentPlayer)} Turn`);
+  gameStatusDisplayManager.displayExclusive(turnStatusElement);
+  turnStatusDisplayManager.displayExclusive(
+    state.currentPlayer === 'X' ? turnStatusXElement : turnStatusOElement
+  );
 }
 
 function isMovePossible(index) {
