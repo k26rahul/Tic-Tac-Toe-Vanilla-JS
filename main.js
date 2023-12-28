@@ -18,11 +18,14 @@ const drawScoreElement = document.querySelector(
 const restartBtnElement = document.querySelector('.restart-btn');
 const gameStatusElement = document.querySelector('.game-status');
 
-restartBtnElement.addEventListener('click', () => {
-  if (state.isGameOver) restart();
-  else if (window.confirm('Are you sure you want to restart the game?'))
-    restart();
-});
+restartBtnElement.addEventListener('click', handleRestart);
+
+function handleRestart() {
+  const confirmation = state.isGameOver
+    ? true
+    : window.confirm('Are you sure you want to restart the game?');
+  if (confirmation) restart();
+}
 
 restart();
 function restart() {
@@ -33,12 +36,14 @@ function restart() {
       once: true,
     });
   });
+
   resetState();
   updateStatus();
 }
 
 function handleCellClick(index) {
   if (!isMovePossible(index)) return;
+
   updateCell(index);
   makeMove(index);
   updateStatus();
@@ -53,37 +58,27 @@ function updateCell(index) {
 }
 
 function updateStatus() {
-  [...gameStatusElement.children].forEach(element => {
-    if (state.winner && element.classList.contains('winner')) {
-      element.style.display = 'block';
-      [...element.children].forEach(
-        el =>
-          (el.style.display = el.classList.contains(state.winner)
-            ? 'initial'
-            : 'none')
-      );
-      return;
-    }
-    if (
-      state.isGameOver &&
-      !state.winner &&
-      element.classList.contains('draw')
-    ) {
-      element.style.display = 'block';
-      return;
-    }
-    if (!state.isGameOver && element.classList.contains('turn')) {
-      element.style.display = 'block';
-      [...element.children].forEach(
-        el =>
-          (el.style.display = el.classList.contains(state.currentPlayer)
-            ? 'initial'
-            : 'none')
-      );
-      return;
-    }
-    element.style.display = 'none';
-  });
+  const { winner, isGameOver, currentPlayer } = state;
+  const children = gameStatusElement.children;
+
+  displayExclusive(
+    children,
+    element =>
+      (winner && element.classList.contains('winner')) ||
+      (isGameOver && !winner && element.classList.contains('draw')) ||
+      (!isGameOver && element.classList.contains('turn'))
+  );
+
+  displayExclusive(
+    children[0].children,
+    element => element.classList.contains(winner),
+    'initial'
+  );
+  displayExclusive(
+    children[2].children,
+    element => element.classList.contains(currentPlayer),
+    'initial'
+  );
 }
 
 function updateScore() {
@@ -100,9 +95,9 @@ function updateScore() {
 
 function highlightWinnerCells() {
   if (!state.winner) return;
-  state.winningLine.forEach(index => {
-    cellElements[index].classList.add('winner');
-  });
+  state.winningLine.forEach(index =>
+    cellElements[index].classList.add('winner')
+  );
 }
 
 function isMovePossible(index) {
@@ -113,6 +108,8 @@ function getPlayerSymbol(player) {
   return player === 'X' ? playerXSymbol : playerOSymbol;
 }
 
-function setStatusText(text) {
-  statusElement.textContent = text;
+function displayExclusive(allElements, predicate, displayStyle = 'block') {
+  Array.from(allElements).forEach(element => {
+    element.style.display = predicate(element) ? displayStyle : 'none';
+  });
 }

@@ -21,11 +21,13 @@ const state = {
 };
 
 function resetState() {
-  state.board = Array(9).fill(null);
-  state.currentPlayer = 'X';
-  state.winner = null;
-  state.winningLine = null;
-  state.isGameOver = false;
+  Object.assign(state, {
+    board: Array(9).fill(null),
+    currentPlayer: 'X',
+    winner: null,
+    winningLine: null,
+    isGameOver: false,
+  });
 }
 
 function makeMove(index) {
