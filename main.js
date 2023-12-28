@@ -10,12 +10,13 @@ let drawScore = 0;
 const cellElements = document.querySelectorAll('.grid-cell');
 const cellElementClassName = cellElements[0].className;
 
-const restartBtnElement = document.querySelector('.restart-btn');
 const XScoreElement = document.querySelector('.score-display.X .score-value');
 const OScoreElement = document.querySelector('.score-display.O .score-value');
 const drawScoreElement = document.querySelector(
   '.score-display.draw .score-value'
 );
+const restartBtnElement = document.querySelector('.restart-btn');
+const gameStatusElement = document.querySelector('.game-status');
 
 restartBtnElement.addEventListener('click', () => {
   if (state.isGameOver) restart();
@@ -52,10 +53,33 @@ function updateCell(index) {
 }
 
 function updateStatus() {
-  if (state.winner) {
-  }
-  if (state.isGameOver) {
-  }
+  [...gameStatusElement.children].forEach(element => {
+    if (state.winner && element.className == 'winner') {
+      element.style.display = 'block';
+      [...element.children].forEach(
+        el =>
+          (el.style.display = el.classList.contains(state.winner)
+            ? 'initial'
+            : 'none')
+      );
+      return;
+    }
+    if (state.isGameOver && !state.winner && element.className == 'draw') {
+      element.style.display = 'block';
+      return;
+    }
+    if (!state.isGameOver && element.className === 'turn') {
+      element.style.display = 'block';
+      [...element.children].forEach(
+        el =>
+          (el.style.display = el.classList.contains(state.currentPlayer)
+            ? 'initial'
+            : 'none')
+      );
+      return;
+    }
+    element.style.display = 'none';
+  });
 }
 
 function updateScore() {
