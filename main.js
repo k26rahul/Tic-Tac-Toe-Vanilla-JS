@@ -54,7 +54,7 @@ function updateCell(index) {
 
 function updateStatus() {
   [...gameStatusElement.children].forEach(element => {
-    if (state.winner && element.className == 'winner') {
+    if (state.winner && element.classList.contains('winner')) {
       element.style.display = 'block';
       [...element.children].forEach(
         el =>
@@ -64,11 +64,15 @@ function updateStatus() {
       );
       return;
     }
-    if (state.isGameOver && !state.winner && element.className == 'draw') {
+    if (
+      state.isGameOver &&
+      !state.winner &&
+      element.classList.contains('draw')
+    ) {
       element.style.display = 'block';
       return;
     }
-    if (!state.isGameOver && element.className === 'turn') {
+    if (!state.isGameOver && element.classList.contains('turn')) {
       element.style.display = 'block';
       [...element.children].forEach(
         el =>
