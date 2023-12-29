@@ -2,8 +2,8 @@ import { state, makeMove, resetState } from './ticTacToeGame.js';
 import { displayExclusive } from './utils.js';
 window.state = state;
 
-const playerXSymbol = '✖️';
-const playerOSymbol = '⭕';
+const playerXSymbol = 'X';
+const playerOSymbol = 'O';
 let XScore = 0;
 let OScore = 0;
 let drawScore = 0;
