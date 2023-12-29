@@ -1,8 +1,9 @@
 import { state, makeMove, resetState } from './ticTacToeGame.js';
+import { displayExclusive } from './utils.js';
 window.state = state;
 
-const playerXSymbol = 'X';
-const playerOSymbol = 'O';
+const playerXSymbol = '✖️';
+const playerOSymbol = '⭕';
 let XScore = 0;
 let OScore = 0;
 let drawScore = 0;
@@ -106,10 +107,4 @@ function isMovePossible(index) {
 
 function getPlayerSymbol(player) {
   return player === 'X' ? playerXSymbol : playerOSymbol;
-}
-
-function displayExclusive(allElements, predicate, displayStyle = 'block') {
-  Array.from(allElements).forEach(element => {
-    element.style.display = predicate(element) ? displayStyle : 'none';
-  });
 }
