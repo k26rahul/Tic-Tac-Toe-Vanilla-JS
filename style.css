@@ -1,10 +1,8 @@
 :root {
-  --stack-margin: 1.5em;
-  --bg-color: #607d8b;
-  --font-family: Verdana, Geneva, Tahoma, sans-serif;
-  --cell-bg-color: #37474f;
-  --cell-X-color: #3498db;
-  --cell-O-color: #e74c3c;
+  --bg-color: #c9edff;
+  --grid-bg-color: #00334c;
+  --cell-X-color: #290963;
+  --cell-O-color: #9c27b0;
   --winner-cell-bg-color: white;
 }
 
@@ -12,12 +10,30 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 button {
   user-select: none;
   border: none;
   cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  background-color: var(--bg-color);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.vertical-stack,
+.horizontal-stack {
+  --stack-margin: 1.5rem;
 }
 
 .vertical-stack > * + * {
@@ -32,19 +48,37 @@ button {
   font-family: 'Monoton', sans-serif;
 }
 
-body {
-  background-color: var(--bg-color);
-  font-family: var(--font-family);
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 8px;
 }
 
-.game-container {
-  padding: 1rem;
+@media (min-width: 600px) {
+  .game-container {
+    border: 2px solid black;
+    background-color: beige;
+  }
+}
+
+.game-score {
+  display: flex;
+}
+
+.score-display {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.game-title {
+.score-display .score-label {
+  width: 5rem;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
+  text-align: center;
+  border-bottom: 2px solid black;
 }
 
 .game-status {
@@ -59,16 +93,22 @@ body {
   display: grid;
   grid-template-rows: repeat(3, 5rem);
   grid-template-columns: repeat(3, 5rem);
-  gap: 0.5rem;
+  gap: 0.25rem;
   justify-content: center;
+  background-color: var(--grid-bg-color);
 }
 
 .grid-cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--cell-bg-color);
+  display: grid;
+  place-items: center;
   font-size: 1.5rem;
+  background-color: var(--bg-color);
+}
+
+@media (min-width: 600px) {
+  .grid-cell {
+    background-color: beige;
+  }
 }
 
 .grid-cell.X {
@@ -85,28 +125,9 @@ body {
 }
 
 .restart-btn {
-  padding: 0.4rem 0.8rem;
-  font-size: 1.2rem;
-  border: 2px solid black;
-  border-radius: 4px;
-  background-color: var(--bg-color);
-}
-
-.game-score {
-  display: flex;
   --stack-margin: 2rem;
-}
-
-.score-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.score-display .score-label {
-  width: 5rem;
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  border-bottom: 2px solid black;
+  padding: 6px 8px;
+  border-radius: 2px;
+  color: white;
+  background-color: #441893;
 }
