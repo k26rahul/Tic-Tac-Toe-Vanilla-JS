@@ -36,6 +36,7 @@ export default class AchexWebSocket {
     this.username = username || AchexWebSocket.generateRandomUsername();
     this.password = password || AchexWebSocket.generateRandomPassword();
 
+    this.sessionID = null;
     this.connectionState = 'connecting'; // Possible values: 'connecting', 'connected', 'closed'
     this.isAuthenticated = false;
 
@@ -44,8 +45,6 @@ export default class AchexWebSocket {
     this.websocket.onclose = this.onClose.bind(this);
     this.websocket.onerror = this.onError.bind(this);
     this.websocket.onopen = this.onOpen.bind(this);
-
-    this.sessionID = null;
   }
 
   onMessage(event) {
@@ -75,12 +74,6 @@ export default class AchexWebSocket {
       console.log(
         `websocket [hub] ${parsedMessage.user} left hub: ${parsedMessage.leftHub}`
       );
-    }
-
-    // Check if it's a latency response message
-    if (parsedMessage.ltcy) {
-      const latency = parsedMessage.ltcy;
-      console.log(`websocket [latency] ${latency} milliseconds`);
     }
 
     // Check if it's an echo response message
@@ -198,12 +191,6 @@ export default class AchexWebSocket {
   echo(data) {
     this.send({
       echo: data,
-    });
-  }
-
-  requestLatency() {
-    this.send({
-      ping: true,
     });
   }
 }

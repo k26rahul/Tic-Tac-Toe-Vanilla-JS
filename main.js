@@ -6,7 +6,6 @@ window.state = state;
 
 const websocket = new AchexWebSocket({ username: 'user_ql4TE9ja' });
 console.log(websocket);
-
 window.websocket = websocket;
 
 const playerXSymbol = '✖️';
