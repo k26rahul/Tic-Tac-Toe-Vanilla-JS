@@ -1,4 +1,4 @@
-import { state, makeMove, resetState } from './ticTacToeGame.js';
+import { state, makeMove, resetState, makeAIMove } from './ticTacToeGame.js';
 import { displayExclusive } from './utils.js';
 window.state = state;
 
@@ -7,14 +7,15 @@ const playerOSymbol = '⭕';
 let XScore = 0;
 let OScore = 0;
 let drawScore = 0;
+let gameMode = 'PvAI';
 
 const cellElements = document.querySelectorAll('.grid-cell');
 const cellElementClassName = cellElements[0].className;
 
-const XScoreElement = document.querySelector('.score-display.X .score-value');
-const OScoreElement = document.querySelector('.score-display.O .score-value');
+const XScoreElement = document.querySelector('.score-cell.X .score-value');
+const OScoreElement = document.querySelector('.score-cell.O .score-value');
 const drawScoreElement = document.querySelector(
-  '.score-display.draw .score-value'
+  '.score-cell.draw .score-value'
 );
 const restartBtnElement = document.querySelector('.restart-btn');
 const gameStatusElement = document.querySelector('.game-status');
@@ -29,6 +30,16 @@ function handleRestart() {
 }
 
 restart();
+
+// handleCellClick(0);
+// handleCellClick(1);
+
+// handleCellClick(7);
+// handleCellClick(2);
+
+// handleCellClick(8);
+// handleCellClick(4);
+
 function restart() {
   cellElements.forEach((cellElement, index) => {
     cellElement.textContent = '';
@@ -40,6 +51,7 @@ function restart() {
 
   resetState();
   updateStatus();
+  handleCellClick(makeAIMove(true));
 }
 
 function handleCellClick(index) {
@@ -50,6 +62,10 @@ function handleCellClick(index) {
   updateStatus();
   updateScore();
   highlightWinnerCells();
+
+  if (gameMode === 'PvAI' && state.currentPlayer === 'X') {
+    handleCellClick(makeAIMove(true));
+  }
 }
 
 function updateCell(index) {

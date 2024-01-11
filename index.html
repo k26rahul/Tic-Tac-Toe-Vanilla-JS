@@ -8,34 +8,32 @@
     <link rel="icon" href="favicon.svg" />
 
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="main.js" defer></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Monoton&display=swap"
       rel="stylesheet"
+      href="desktop-style.css"
+      media="screen and (min-width: 600px)"
     />
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"
-      defer
-    ></script>
+    <link
+      rel="stylesheet"
+      href="mobile-style.css"
+      media="screen and (max-width: 599px)"
+    />
+    <script type="module" src="main.js" defer></script>
   </head>
   <body>
     <main class="game-container vertical-stack">
       <h1 class="game-title">Tic-Tac-Toe</h1>
 
       <section class="game-score horizontal-stack">
-        <div class="score-display X">
+        <div class="score-cell X">
           <span class="score-label">Win <span class="XO">✖️</span></span>
           <span class="score-value">0</span>
         </div>
-        <div class="score-display draw">
+        <div class="score-cell draw">
           <span class="score-label">Draw <span class="XO">🍃</span></span>
           <span class="score-value">0</span>
         </div>
-        <div class="score-display O">
+        <div class="score-cell O">
           <span class="score-label">Win <span class="XO">⭕</span></span>
           <span class="score-value">0</span>
         </div>
@@ -67,7 +65,41 @@
         <button class="grid-cell XO"></button>
       </section>
 
-      <button class="restart-btn">Restart</button>
+      <button class="restart-btn btn">Restart</button>
     </main>
+    <aside class="menu">
+      <form class="controls vertical-stack">
+        <label>
+          Game Mode:
+          <select name="game-mode">
+            <option value="single-player" selected>
+              Single Player (vs AI)
+            </option>
+            <option value="two-player">Two Player</option>
+          </select>
+        </label>
+
+        <label>
+          AI Difficulty:
+          <select name="ai-difficulty">
+            <option value="easy" selected>Easy</option>
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+
+        <label>
+          AI Goes First:
+          <input type="checkbox" name="ai-goes-first" />
+        </label>
+
+        <label>
+          Dark Mode:
+          <input type="checkbox" name="dark-mode" />
+        </label>
+
+        <button class="btn">Reset Game Score</button>
+      </form>
+    </aside>
   </body>
 </html>

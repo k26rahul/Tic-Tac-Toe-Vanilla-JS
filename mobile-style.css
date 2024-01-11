@@ -1,0 +1,8 @@
+.grid-cell {
+  background-color: var(--body-bg-color);
+}
+
+.game-container {
+  border: none;
+  background-color: var(--body-bg-color);
+}

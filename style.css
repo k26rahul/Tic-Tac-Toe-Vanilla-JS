@@ -1,8 +1,7 @@
 :root {
-  --bg-color: #c9edff;
-  --grid-bg-color: #00334c;
-  --cell-X-color: #290963;
-  --cell-O-color: #9c27b0;
+  --body-bg-color: #c9edff;
+  --game-container-bg-color: beige;
+  --grid-lines-color: #00334c;
   --winner-cell-bg-color: white;
 }
 
@@ -13,12 +12,6 @@
   font-family: inherit;
 }
 
-button {
-  user-select: none;
-  border: none;
-  cursor: pointer;
-}
-
 html,
 body {
   height: 100%;
@@ -26,14 +19,22 @@ body {
 
 body {
   display: grid;
-  place-items: center;
-  background-color: var(--bg-color);
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--body-bg-color);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button {
+  user-select: none;
+  border: none;
+  cursor: pointer;
 }
 
 .vertical-stack,
 .horizontal-stack {
-  --stack-margin: 1.5rem;
+  --stack-margin: 1em;
 }
 
 .vertical-stack > * + * {
@@ -44,36 +45,28 @@ body {
   margin-left: var(--stack-margin);
 }
 
-.XO {
-  font-family: 'Monoton', sans-serif;
-}
-
 .game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  border-radius: 8px;
-}
-
-@media (min-width: 600px) {
-  .game-container {
-    border: 2px solid black;
-    background-color: beige;
-  }
+  border-radius: 0.25rem;
+  border: 2px solid black;
+  background-color: var(--game-container-bg-color);
+  --stack-margin: 1.5rem;
 }
 
 .game-score {
   display: flex;
 }
 
-.score-display {
+.score-cell {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.score-display .score-label {
+.score-cell .score-label {
   width: 5rem;
   margin-bottom: 0.25rem;
   padding-bottom: 0.25rem;
@@ -95,20 +88,14 @@ body {
   grid-template-columns: repeat(3, 5rem);
   gap: 0.25rem;
   justify-content: center;
-  background-color: var(--grid-bg-color);
+  background-color: var(--grid-lines-color);
 }
 
 .grid-cell {
   display: grid;
   place-items: center;
   font-size: 1.5rem;
-  background-color: var(--bg-color);
-}
-
-@media (min-width: 600px) {
-  .grid-cell {
-    background-color: beige;
-  }
+  background-color: var(--game-container-bg-color);
 }
 
 .grid-cell.X {
@@ -124,10 +111,30 @@ body {
   font-weight: bold;
 }
 
-.restart-btn {
-  --stack-margin: 2rem;
+.btn {
   padding: 6px 8px;
   border-radius: 2px;
   color: white;
   background-color: #441893;
+}
+
+.restart-btn {
+  --stack-margin: 2rem;
+}
+
+.menu {
+  width: 320px;
+  height: 250px;
+  padding: 1rem;
+  background-color: aqua;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.controls button {
+  --stack-margin: 2rem;
+  align-self: center;
 }
