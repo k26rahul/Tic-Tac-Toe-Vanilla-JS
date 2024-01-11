@@ -73,7 +73,7 @@ function getPossibleMoves(board) {
 function makeAIMove(isMaximizing = true) {
   window.minimax_count = 0;
   console.time();
-  const { bestMove, bestScore } = minimax(state.board, 10, isMaximizing);
+  const { bestMove } = minimax(state.board, 3, isMaximizing);
   console.timeEnd();
   return bestMove;
 }

@@ -1,6 +1,13 @@
 import { state, makeMove, resetState, makeAIMove } from './ticTacToeGame.js';
 import { displayExclusive } from './utils.js';
+import AchexWebSocket from './AchexWebSocket.js';
+
 window.state = state;
+
+const websocket = new AchexWebSocket({ username: 'user_ql4TE9ja' });
+console.log(websocket);
+
+window.websocket = websocket;
 
 const playerXSymbol = '✖️';
 const playerOSymbol = '⭕';
@@ -30,15 +37,6 @@ function handleRestart() {
 }
 
 restart();
-
-// handleCellClick(0);
-// handleCellClick(1);
-
-// handleCellClick(7);
-// handleCellClick(2);
-
-// handleCellClick(8);
-// handleCellClick(4);
 
 function restart() {
   cellElements.forEach((cellElement, index) => {
