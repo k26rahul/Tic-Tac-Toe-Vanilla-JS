@@ -1,12 +1,27 @@
 import { state, makeMove, resetState, makeAIMove } from './ticTacToeGame.js';
 import { displayExclusive } from './utils.js';
-import AchexWebSocket from './AchexWebSocket.js';
+import AchexWebSocket from './AchexWebSocket/AchexWebSocket.js';
 
 window.state = state;
 
-const websocket = new AchexWebSocket({ username: 'user_ql4TE9ja' });
-console.log(websocket);
-window.websocket = websocket;
+const achexWebSocket = new AchexWebSocket({ username: 'user_ql4TE9ja' });
+
+achexWebSocket.on('CONNECTED', data => {});
+achexWebSocket.onConnected(data => {});
+achexWebSocket.onHubMessage(data => {});
+achexWebSocket.onHubMessage(data => {});
+achexWebSocket.onHubMessage(data => {});
+achexWebSocket.on('CONNECTED', data => {});
+achexWebSocket.on('CONNECTED', data => {});
+achexWebSocket.on('CONNECTED', data => {});
+achexWebSocket.on('CLOSED', data => {});
+achexWebSocket.on('ERROR', data => {});
+achexWebSocket.on('MESSAGE', data => {});
+achexWebSocket.on('USER_MESSAGE', data => {});
+achexWebSocket.on('SESSION_MESSAGE', data => {});
+achexWebSocket.on('HUB_MESSAGE', data => {});
+achexWebSocket.on('USER_LEFT_HUB', data => {});
+console.log((window.achexWebSocket = achexWebSocket));
 
 const playerXSymbol = '✖️';
 const playerOSymbol = '⭕';
