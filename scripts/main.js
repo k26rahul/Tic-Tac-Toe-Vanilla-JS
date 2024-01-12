@@ -1,26 +1,8 @@
-import { state, makeMove, resetState, makeAIMove } from './ticTacToeGame.js';
-import { displayExclusive } from './utils.js';
+import TicTacToeGame from './TicTacToeGame/TicTacToeGame.js';
 import AchexWebSocket from './AchexWebSocket/AchexWebSocket.js';
-
-window.state = state;
+import { displayExclusive } from './utils.js';
 
 const achexWebSocket = new AchexWebSocket({ username: 'user_ql4TE9ja' });
-
-achexWebSocket.on('CONNECTED', data => {});
-achexWebSocket.onConnected(data => {});
-achexWebSocket.onHubMessage(data => {});
-achexWebSocket.onHubMessage(data => {});
-achexWebSocket.onHubMessage(data => {});
-achexWebSocket.on('CONNECTED', data => {});
-achexWebSocket.on('CONNECTED', data => {});
-achexWebSocket.on('CONNECTED', data => {});
-achexWebSocket.on('CLOSED', data => {});
-achexWebSocket.on('ERROR', data => {});
-achexWebSocket.on('MESSAGE', data => {});
-achexWebSocket.on('USER_MESSAGE', data => {});
-achexWebSocket.on('SESSION_MESSAGE', data => {});
-achexWebSocket.on('HUB_MESSAGE', data => {});
-achexWebSocket.on('USER_LEFT_HUB', data => {});
 console.log((window.achexWebSocket = achexWebSocket));
 
 const playerXSymbol = '✖️';
@@ -42,16 +24,17 @@ const restartBtnElement = document.querySelector('.restart-btn');
 const gameStatusElement = document.querySelector('.game-status');
 
 restartBtnElement.addEventListener('click', handleRestart);
-
 function handleRestart() {
-  const confirmation = state.isGameOver
+  const confirmation = ticTacToeGame.state.isGameOver
     ? true
     : window.confirm('Are you sure you want to restart the game?');
   if (confirmation) restart();
 }
 
-restart();
+const ticTacToeGame = new TicTacToeGame();
+window.state = ticTacToeGame.state;
 
+restart();
 function restart() {
   cellElements.forEach((cellElement, index) => {
     cellElement.textContent = '';
@@ -61,33 +44,33 @@ function restart() {
     });
   });
 
-  resetState();
+  ticTacToeGame.resetState();
   updateStatus();
-  handleCellClick(makeAIMove(true));
+  handleCellClick(ticTacToeGame.getAIMove(true));
 }
 
 function handleCellClick(index) {
-  if (!isMovePossible(index)) return;
+  if (!ticTacToeGame.isMovePossible(index)) return;
 
   updateCell(index);
-  makeMove(index);
+  ticTacToeGame.makeMove(index);
   updateStatus();
   updateScore();
   highlightWinnerCells();
 
-  if (gameMode === 'PvAI' && state.currentPlayer === 'X') {
-    handleCellClick(makeAIMove(true));
+  if (gameMode === 'PvAI' && ticTacToeGame.state.currentPlayer === 'X') {
+    handleCellClick(ticTacToeGame.getAIMove(true));
   }
 }
 
 function updateCell(index) {
   const cellElement = cellElements[index];
-  cellElement.textContent = getPlayerSymbol(state.currentPlayer);
-  cellElement.classList.add(state.currentPlayer);
+  cellElement.textContent = getPlayerSymbol(ticTacToeGame.state.currentPlayer);
+  cellElement.classList.add(ticTacToeGame.state.currentPlayer);
 }
 
 function updateStatus() {
-  const { winner, isGameOver, currentPlayer } = state;
+  const { winner, isGameOver, currentPlayer } = ticTacToeGame.state;
   const children = gameStatusElement.children;
 
   displayExclusive(
@@ -103,6 +86,7 @@ function updateStatus() {
     element => element.classList.contains(winner),
     'initial'
   );
+
   displayExclusive(
     children[2].children,
     element => element.classList.contains(currentPlayer),
@@ -111,10 +95,10 @@ function updateStatus() {
 }
 
 function updateScore() {
-  if (!state.isGameOver) return;
+  if (!ticTacToeGame.state.isGameOver) return;
 
-  if (state.winner === 'X') XScore++;
-  else if (state.winner === 'O') OScore++;
+  if (ticTacToeGame.state.winner === 'X') XScore++;
+  else if (ticTacToeGame.state.winner === 'O') OScore++;
   else drawScore++;
 
   XScoreElement.textContent = XScore;
@@ -123,14 +107,9 @@ function updateScore() {
 }
 
 function highlightWinnerCells() {
-  if (!state.winner) return;
-  state.winningLine.forEach(index =>
-    cellElements[index].classList.add('winner')
-  );
-}
-
-function isMovePossible(index) {
-  return !state.isGameOver && state.board[index] === null;
+  const winningLine = ticTacToeGame.state.winningLine;
+  if (!winningLine) return;
+  winningLine.forEach(index => cellElements[index].classList.add('winner'));
 }
 
 function getPlayerSymbol(player) {

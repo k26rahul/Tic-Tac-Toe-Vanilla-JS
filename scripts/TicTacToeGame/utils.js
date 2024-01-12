@@ -1,51 +1,15 @@
-const state = {
-  board: Array(9).fill(null),
-  currentPlayer: 'X',
-  winner: null,
-  winningLine: null,
-  isGameOver: false,
-};
+export function checkWinner(board) {
+  const winningLines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
-function resetState() {
-  Object.assign(state, {
-    board: Array(9).fill(null),
-    currentPlayer: 'X',
-    winner: null,
-    winningLine: null,
-    isGameOver: false,
-  });
-}
-
-function makeMove(index) {
-  state.board[index] = state.currentPlayer;
-
-  const winnerResult = checkWinner(state.board);
-  if (winnerResult) {
-    state.winner = winnerResult.winner;
-    state.winningLine = winnerResult.winningLine;
-    state.isGameOver = true;
-  } else if (isBoardFull(state.board)) {
-    state.isGameOver = true;
-  } else {
-    state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
-  }
-}
-
-const winningLines = [
-  // Rows
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  // Columns
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  // Diagonals
-  [0, 4, 8],
-  [2, 4, 6],
-];
-
-function checkWinner(board) {
   for (const line of winningLines) {
     const [a, b, c] = line;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -58,11 +22,7 @@ function checkWinner(board) {
   return null;
 }
 
-function isBoardFull() {
-  return state.board.every(cell => cell !== null);
-}
-
-function getPossibleMoves(board) {
+export function getPossibleMoves(board) {
   const possibleMoves = [];
   for (let i = 0; i < 9; i++) {
     if (board[i] === null) possibleMoves.push(i);
@@ -70,17 +30,11 @@ function getPossibleMoves(board) {
   return possibleMoves;
 }
 
-function makeAIMove(isMaximizing = true) {
-  window.minimax_count = 0;
-  console.time();
-  const { bestMove } = minimax(state.board, 3, isMaximizing);
-  console.timeEnd();
-  return bestMove;
+export function isBoardFull(board) {
+  return board.every(cell => cell !== null);
 }
 
-function minimax(board, depth, isMaximizing) {
-  window.minimax_count++;
-
+export function minimax(board, depth, isMaximizing) {
   if (depth === 0 || isBoardFull(board)) {
     return { bestMove: null, bestScore: 0 };
   }
@@ -124,5 +78,3 @@ function minimax(board, depth, isMaximizing) {
     return { bestMove, bestScore };
   }
 }
-
-export { state, makeMove, resetState, makeAIMove };

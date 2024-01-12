@@ -1,4 +1,4 @@
-import EventEmitter from '../EventEmitter.js';
+import EventEmitter from '../EventEmitter/EventEmitter.js';
 import { generateRandomString, createMessageObject } from './utils.js';
 
 export default class AchexWebSocket {
