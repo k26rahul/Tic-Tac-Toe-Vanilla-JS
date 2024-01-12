@@ -74,12 +74,19 @@ button {
   border-bottom: 2px solid black;
 }
 
-.game-status {
-  font-size: 1.5rem;
-}
-
 .game-status > p {
   display: none;
+  font-size: 1.5rem;
+}
+.game-status > p.active {
+  display: initial;
+}
+
+.game-status .XO {
+  display: none;
+}
+.game-status .XO.active {
+  display: initial;
 }
 
 .game-grid {

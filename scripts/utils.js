@@ -1,9 +1,8 @@
-export function displayExclusive(
-  elements,
-  conditionCallback,
-  displayValue = 'block'
-) {
+export function displayExclusive(elements, conditionCallback) {
   [...elements].forEach(element => {
-    element.style.display = conditionCallback(element) ? displayValue : 'none';
+    if (conditionCallback(element)) element.classList.add('active');
+    else {
+      element.classList.remove('active');
+    }
   });
 }

@@ -81,16 +81,12 @@ function updateStatus() {
       (!isGameOver && element.classList.contains('turn'))
   );
 
-  displayExclusive(
-    children[0].children,
-    element => element.classList.contains(winner),
-    'initial'
+  displayExclusive(children[0].children, element =>
+    element.classList.contains(winner)
   );
 
-  displayExclusive(
-    children[2].children,
-    element => element.classList.contains(currentPlayer),
-    'initial'
+  displayExclusive(children[2].children, element =>
+    element.classList.contains(currentPlayer)
   );
 }
 
