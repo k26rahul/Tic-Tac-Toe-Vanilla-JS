@@ -1,5 +1,38 @@
 import { html } from 'lit-html';
 
+css`
+  :root {
+    --body-bg-color: #c9edff;
+    --game-container-bg-color: beige;
+    --grid-lines-color: #00334c;
+    --winner-cell-bg-color: white;
+    background-color: darkslategrey;
+    border-radius: 0ex;
+    border-radius: 0ex;
+  }
+
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--body-bg-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+`;
+
 html`<template>
   <section class="game-grid">
     <button class="grid-cell"></button>
