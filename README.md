@@ -1,2 +1,2 @@
-# Tic-Tac-Toe
- Tic-Tac-Toe
+# Tic-Tac-Toe-Vanilla-JS
+ Tic-Tac-Toe-Vanilla-JS
